@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: io_app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./src/:/app
+
+  nginx:
+    container_name: io_nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 8082:80
+    depends_on:
+      - app
+    volumes:
+      - ./src/:/app
+
+  mysql:
+    container_name: io_mysql
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_DATABASE: io_app
+      MYSQL_USER: io_user
+      MYSQL_PASSWORD: io_password
+      MYSQL_ROOT_PASSWORD: io_password
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - mysql-volume:/var/lib/mysql
+      - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    container_name: io_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    platform: linux/x86_64
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=io_user
+      - PMA_PASSWORD=io_password
+    links:
+      - mysql
+    ports:
+      - 8083:80
+
+  mailhog:
+    container_name: io_mailhog
+    image: mailhog/mailhog
+    platform: linux/x86_64
+    ports:
+      - 8084:8025
+      
+volumes:
+  mysql-volume:
