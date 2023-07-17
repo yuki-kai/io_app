@@ -6,7 +6,6 @@
 - PHP8
 - Laravel9
 	- Sanctum
-	- Fortify
 
 ## 環境構築
 ```shell script
@@ -23,3 +22,7 @@ $ php artisan migrate --seed
 - [Laravel Sanctum SPA認証の実装](https://zenn.dev/yudai64/articles/7caaa3c828b828)
 - [Laravel 9.x Laravel Sanctum](https://readouble.com/laravel/9.x/ja/sanctum.html)
 - [Laravel 9.x Laravel Fortify](https://readouble.com/laravel/9.x/ja/fortify.html)
+
+## やりたいこと
+- CI/CD
+- AWSとの連携
