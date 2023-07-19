@@ -12,9 +12,17 @@ const Login = () => {
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault()
 
-        await axios.post('http://localhost:8082/api/login', {
-            email, password
-        }, {withCredentials: true})
+        axios.get('/sanctum/csrf-cookie').then((response) => {
+            console.log('CSRF');
+            console.log(response);
+
+            // axios.post('http://localhost:8082/api/login', {
+            axios.post('http://localhost:8082/login', {
+                email, password
+            }, {withCredentials: true}).then((res) => {
+                console.log(res)
+            })
+        })
 
         setRedirect(true)
     }

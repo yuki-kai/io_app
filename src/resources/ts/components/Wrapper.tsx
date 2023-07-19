@@ -12,17 +12,20 @@ const Wrapper = (props: any) => {
             async () => {
                 // 認証していなければログイン画面にリダイレクト
                 try {
-                    const {data} = await axios.get('http://localhost:8082/api/user')
+                    // const {data} = await axios.get('http://localhost:8082/api/user')
+                    // console.log('成功')
+                    // console.log(data)
                 } catch (e) {
+                    // console.log('失敗')
                     setRedirect(true)
                 }
             }
         )()
     }, [])
 
-    if (redirect) {
-        return <Navigate to={'/login'} />
-    }
+    // if (redirect) {
+    //     return <Navigate to={'/login'} />
+    // }
 
     return (
         <>

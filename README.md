@@ -23,6 +23,12 @@ $ php artisan migrate --seed
 - [Laravel 9.x Laravel Sanctum](https://readouble.com/laravel/9.x/ja/sanctum.html)
 - [Laravel 9.x Laravel Fortify](https://readouble.com/laravel/9.x/ja/fortify.html)
 
+- [Laravel API SanctumでSPA認証する](https://qiita.com/ucan-lab/items/3e7045e49658763a9566)
+
 ## やりたいこと
 - CI/CD
 - AWSとの連携
+- 記事のタグ付け機能
+
+## 現状
+- ログインはできるが、auth:sanctum以下のapi/userが401になる

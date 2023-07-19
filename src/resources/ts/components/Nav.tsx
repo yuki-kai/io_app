@@ -8,6 +8,7 @@ const Nav = () => {
     useEffect(() => {
         (
             async () => {
+                // ログインは成功してるぽいがapiが叩けない
                 const {data} = await axios.get('http://localhost:8082/api/user')
                 setUser(data)
             }
@@ -15,7 +16,8 @@ const Nav = () => {
     }, [])
 
     const logout = async () => {
-        await axios.get('http://localhost:8082/api/logout', {})
+        // await axios.get('http://localhost:8082/api/logout', {})
+        await axios.post('http://localhost:8082/logout', {})
     }
 
     return (

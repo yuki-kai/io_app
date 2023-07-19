@@ -31,28 +31,40 @@ class AuthController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        /** @var User $user */
-        $user = Auth::user();
-        $jwt = $user->createToken('token')->plainTextToken;
+        $request->session()->regenerate();
+        return response()->json(Auth::user());
 
-        $cookie = cookie('jwt', $jwt, 15);
+        // /** @var User $user */
+        // $user = Auth::user();
+        // $jwt = $user->createToken('token')->plainTextToken;
 
-        return response([
-           'jwt' => $jwt
-        ])->withCookie($cookie);
+        // $cookie = cookie('jwt', $jwt, 15);
+
+        // return response([
+        //    'jwt' => $jwt
+        // ])->withCookie($cookie);
     }
 
     public function user(Request $request)
     {
+        \Log::debug('userメソッド');
         return $request->user();
     }
 
     public function logout(Request $request)
     {
-        $cookie = Cookie::forget('jwt');
+        Auth::logout();
 
-        return response([
-           'message' => 'ログアウトしました'
-        ])->withCookie($cookie);
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return response()->json(true);
+
+        // $cookie = Cookie::forget('jwt');
+
+        // return response([
+        //    'message' => 'ログアウトしました'
+        // ])->withCookie($cookie);
     }
 }
